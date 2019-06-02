@@ -1,0 +1,19 @@
+.btn.btn-link {
+    background: transparent;
+    border-color: transparent;
+    color: #099FE8;
+}
+
+.btn.btn-link:hover {
+    color: #003DA3;
+}
+
+a:visited {
+    color: #099FE8;
+}
+
+.btn.btn-link:focus {
+    color: #003DA3;
+    border: transparent;
+    box-shadow: none;
+}

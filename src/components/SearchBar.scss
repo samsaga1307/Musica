@@ -1,0 +1,18 @@
+form {
+    .form-input {
+        background: transparent;
+        border: none;
+        border-bottom: 1px solid #C9C9C9;
+        height: auto;
+        transition: 0.3s;
+        padding-left: 0px;
+        padding-bottom: 10px;
+
+        &:focus {
+            border-color: transparent;
+            border-bottom: 1px solid #C9C9C9;
+            box-shadow: none;
+            font-size: 2em;
+        }
+    }
+}

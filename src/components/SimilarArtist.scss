@@ -1,0 +1,24 @@
+.similar-artist {
+    // margin-top: 3em;
+    
+    span {
+        margin-left: 0px;
+        margin-right: 10px;
+        background: #099FE8;
+        padding: 14px;
+        color: white;
+        transition: 0.5s;
+
+        &:hover {
+            background: #003DA3;
+        }
+    }
+}
+
+a:focus {
+    box-shadow: none;
+}
+
+a:hover {
+    text-decoration: none;
+}
