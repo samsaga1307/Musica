@@ -1,10 +1,7 @@
+@import "./variables.scss";
+
 body {
     background: #f5f5f5;
-}
-
-.wrong-artist {
-    color: red;
-
 }
 
 .container {
@@ -17,41 +14,35 @@ body {
         padding-right: .4rem;
     
         .nav-top {
-            // margin-top: 2em;
             padding-top: 2em;
         }
         
         .hero-section {
             .column {
-                // text-align: center;
             
                 h1 {
-                    margin-top: 1em;
+                    margin-top: 2em;
                     color: rgb(44, 44, 44);
+                    max-width: 700px;
+
+                    @media(max-width: 426px) {
+                        font-size: 1.5rem;
+                    }
                 }
             }
-        }    
-    }
-    
-    // .album {
-    //     margin-top: 2em;
-    // }
-    
-}
+        }
+        
+        .loading {
+            margin-top: 2em;
+        }
 
-.btn.btn-primary {
-    background: #099FE8;
-    border-color: #099FE8;
-}
+        .show-artists {
+            margin-top: 3em;
+        }
 
-.btn.btn.btn-primary:hover {
-    background-color: #003DA3;
-}
-
-.btn.btn.btn-primary:focus {
-    background-color: #003DA3;
-}
-
-.show-artists {
-    margin-top: 3em;
+        .wrong-artist {
+            color: $error;
+        }
+        
+    }   
 }

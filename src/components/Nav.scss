@@ -1,19 +1,73 @@
+@import "./variables.scss";
+
 .btn.btn-link {
     background: transparent;
     border-color: transparent;
-    color: #099FE8;
+    color: $primary;
+
+    &:hover {
+        color: $secondary;
+    }
+
+    &:focus {
+        color: $secondary;
+        border: transparent;
+        box-shadow: none;
+    }
 }
 
-.btn.btn-link:hover {
-    color: #003DA3;
-}
+.navbar {
+    &-section {
+        label {
+            font-size: 24px;
+            display: none;
+        }
 
-a:visited {
-    color: #099FE8;
-}
+        .logo-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
 
-.btn.btn-link:focus {
-    color: #003DA3;
-    border: transparent;
-    box-shadow: none;
+            &:hover {
+                text-decoration: none;
+
+                h6 {
+                    color: $secondary;
+                }
+            }
+
+            &:focus {
+                box-shadow: none;
+            }
+
+            .logo {
+                width: 40px;
+            }
+    
+            h6 {
+                margin-left: .6em;
+                margin-bottom: 0em;
+                color: black;
+                transition: 0.3s;
+            }
+        }
+
+    }
+
+    @media(max-width: 426px) {
+        margin-bottom: -2em;
+    }
+
+    @media(max-width: 380px) {
+        flex-direction: column;
+
+        &-section {
+            flex-direction: column;
+            align-items: baseline !important;
+
+            &.hide {
+                display: none;
+            }
+        }
+    }
 }

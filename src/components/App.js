@@ -7,51 +7,62 @@ import SearchBar from './SearchBar';
 import AlbumsCollection from './AlbumsCollection';
 import Nav from './Nav';
 import SimilarArtist from './SimilarArtist';
+import Footer from './Footer';
 
 class App extends React.Component {
 
-    state = {artistID: 0, albums:[], player:'', noData:Boolean, similarArtist: []};
+    state = {artistID: 0, albums:[], player:'', noData:Boolean, similarArtist: [], searchQ: ''};
 
-  onArtistName = async (artist) => {
+    componentDidMount() {
+        //whenever the app first loads this is whats first shown to the user
+        this.onArtistName('Foster The People');
+    }
 
-    // console.log(artist);
-    const response = await axios.get('https://cors-anywhere.herokuapp.com/http://api.deezer.com/search/artist', {
-        params: {
-            q: artist
+    onArtistName = async (artist) => {
+        this.setState({searchQ: artist})
+
+        // console.log(artist);
+        const response = await axios.get('https://cors-anywhere.herokuapp.com/http://api.deezer.com/search/artist', {
+            params: {
+                q: artist
+            }
+        });
+
+        if(!(response.data.data.length === 0)) {
+            this.setState({noData: false}) 
+            this.setState({artistID: response.data.data[0].id});
+
+            const response2 = await axios.get(`https://cors-anywhere.herokuapp.com/http://api.deezer.com/artist/${this.state.artistID}/albums?limit=100`);
+            this.setState({albums: response2.data.data});
+            console.log(this.state.albums);    
+
+            //remove duplicate albums
+            const uniqueAlbums = Array.from(new Set(this.state.albums.map(a => a.title)))
+            .map(title => {
+            return this.state.albums.find(a => a.title === title)
+            })
+            this.setState({albums: uniqueAlbums});
+
+            const response4 = await axios.get(`https://cors-anywhere.herokuapp.com/https://api.deezer.com/artist/${this.state.artistID}/related?limit=10`);
+            this.setState({similarArtist: response4.data.data});
+            console.log(this.state.similarArtist);
         }
-    });
 
-    if(!(response.data.data.length === 0)) {
-        this.setState({noData: false}) 
-        this.setState({artistID: response.data.data[0].id});
+        else {
+            this.setState({noData: true});
+        }
 
-        const response2 = await axios.get(`https://cors-anywhere.herokuapp.com/http://api.deezer.com/artist/${this.state.artistID}/albums`);
-        this.setState({albums: response2.data.data});
-        console.log(this.state.albums);    
-
-        const response4 = await axios.get(`https://cors-anywhere.herokuapp.com/https://api.deezer.com/artist/${this.state.artistID}/related?limit=10`);
-        this.setState({similarArtist: response4.data.data})
-        console.log(this.state.similarArtist);
-        
-    }
-
-    else {
-        this.setState({noData: true}) 
-    }
-
-    
-
-    //code for music player
-    // this.setState({player: response3.data.html});
-    // // console.log();
-    // console.log(this.state.player);
+        //code for music player
+        // this.setState({player: response3.data.html});
+        // // console.log();
+        // console.log(this.state.player);
   }
 
   render() {
 
-    let idk;
+    let loading;
     if(this.state.artistID > 1 && this.state.albums.length < 1) {
-        idk = <progress className="progress" max="100"></progress>;
+        loading = <div className="loading loading-lg"></div>;
     }
 
     let wrongArtist;
@@ -60,8 +71,8 @@ class App extends React.Component {
     }
 
     let showArtists;
-    if(this.state.similarArtist.length > 1) {
-        showArtists = <h5 className="show-artists">Similar artists:</h5>;
+    if(this.state.similarArtist.length > 0) {
+        showArtists = <h5 className="show-artists">Similar artists to {this.state.searchQ}:</h5>;
     }
 
       return (
@@ -76,26 +87,31 @@ class App extends React.Component {
 
                     <div className="hero-section columns">
                         <div className="column col-10 col-md-10 col-mx-auto">
-                            <h1>Musica</h1>
+                            <h1>Search for an artist to have a peak at their discography</h1>
 
                             <div className="form-group">
-                                <SearchBar submit={this.onArtistName}/>
+                                <SearchBar submit={this.onArtistName} text={this.state.searchQ}/>
                                 {wrongArtist}
                                 {showArtists}
-                                <SimilarArtist artists={this.state.similarArtist}/>
+                                <SimilarArtist artists={this.state.similarArtist} search={this.onArtistName}/>
                             </div>
-                            {idk}
+                                {loading}
                         </div>     
                     </div>
                 </div>
                 
                 <div className="album columns">
                     <div className="column col-10 col-md-10 col-mx-auto">
-                       
                         <AlbumsCollection albums={this.state.albums}/>
                     </div>   
                 </div>
                 {/* {this.state.player.html} */}
+
+                <div className="columns">
+                    <div className="column col-10 col-md-10 col-mx-auto">
+                        <Footer />
+                    </div>
+                </div>
             </div>   
         
       )

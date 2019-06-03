@@ -1,24 +1,22 @@
+@import "./variables.scss";
+
 .similar-artist {
-    // margin-top: 3em;
-    
     span {
         margin-left: 0px;
         margin-right: 10px;
-        background: #099FE8;
+        margin-bottom: 10px;
+        background: white;
+        color: black;
         padding: 14px;
-        color: white;
-        transition: 0.5s;
+        transition: 0.3s;
+        box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
+        border-radius: 6px;
+        cursor: pointer;
 
         &:hover {
-            background: #003DA3;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
+            transform: translateY(-4px);
+            color: $secondary;
         }
     }
-}
-
-a:focus {
-    box-shadow: none;
-}
-
-a:hover {
-    text-decoration: none;
 }

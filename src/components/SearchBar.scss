@@ -1,8 +1,12 @@
+@import "./variables.scss";
+
 form {
+    position: relative;
+
     .form-input {
         background: transparent;
         border: none;
-        border-bottom: 1px solid #C9C9C9;
+        border-bottom: 1px solid $primary;
         height: auto;
         transition: 0.3s;
         padding-left: 0px;
@@ -10,9 +14,14 @@ form {
 
         &:focus {
             border-color: transparent;
-            border-bottom: 1px solid #C9C9C9;
+            border-bottom: 1px solid $primary;
             box-shadow: none;
             font-size: 2em;
+
+            @media(max-width: 380px) {
+                font-size: 1.3em;
+
+            }
         }
     }
 }
